@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom"
 
 export default function Main(){
     return (
-        <div className="shrink-0 flex flex-col min-h-screen w-full justify-between items-center">
+        <div className="shrink-0 flex flex-col min-h-screen w-screen justify-between items-center">
             <NavBar />
                 <Outlet />
             

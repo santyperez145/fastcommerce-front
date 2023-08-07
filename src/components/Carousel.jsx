@@ -20,8 +20,8 @@ export default function Carousel() {
     let right = "M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 
     return (
-    <div className="hidden lg:flex justify-center items-center w-full h-full">
-        <div className='flex text-white w-[90%] h-[75%] rounded-md bg-gradient-to-b from-orange-600 to-orange-500 justify-around gap-[15px] items-center p-2'>
+    <div className="hidden lg:flex md:mt-[100px] justify-center items-center w-full h-[40vh]">
+        <div className='flex text-white w-[90%] h-[75%] rounded-md bg-purple-600 justify-around gap-[15px] items-center p-2'>
             <button className='button' onClick={prev}>
                 <Arrow icon = {left} />
             </button>

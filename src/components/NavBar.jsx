@@ -21,7 +21,7 @@ function NavBar() {
 
   const signout = async () => {
     try {
-      await api.post(apiUrl + endpoints.signout, null, {
+      await api.post(apiUrl + endpoints.logout, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -51,7 +51,7 @@ function NavBar() {
 
     const fetchUserData = async () => {
       try {
-        const response = await api.get(apiUrl + endpoints.signintoken, {
+        const response = await api.get(apiUrl + endpoints.login, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log(response)
@@ -71,11 +71,11 @@ function NavBar() {
   }, []);
 
   return (
-    <nav className="w-full text-white absolute flex flex-col items-center justify-around">
+    <nav className="w-full text-white absolute flex flex-col items-center bg-orange-400 justify-around">
       <div className="flex w-[90%] justify-between items-center p-6">
         <img src="/Menu.svg" onClick={() => setDisplay(!display)} alt="Menu" />
         {display && (
-          <div className="drawer sm:flex text-start min-w-[300px] sm:min-w-[410px] h-[100vh] flex-col sm:items-start gap-[147px] p-6 bg-gradient-to-b from-orange-600 to-orange-500 fixed top-0 left-0 shadow-2xl">
+          <div className="drawer sm:flex text-start min-w-[300px] sm:min-w-[410px] h-[100vh] flex-col sm:items-start gap-[147px] p-6 bg-purple-600 fixed top-0 left-0 shadow-2xl">
             <div className="flex h-[525px] flex-col items-center sm:items-start gap-8 self-stretch">
               {isLoggedIn() ? (
                 <div className="flex flex-row items-center text-center lg:justify-between sm:w-[400px] w-full">
@@ -87,29 +87,29 @@ function NavBar() {
                 </div>
               ) : (
                 <div className="w-11/12 flex justify-end items-center" onClick={() => setDisplay(!display)}>
-                  <svg className="w-12 p-1 text-white border-white border-2 hover:bg-[#ff7b00] rounded-lg" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <svg className="w-12 p-1 text-white border-white border-2 hover:bg-purple-600 rounded-lg" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
               )}
 
               <div className="lg:text-lg flex flex-col">
-                <Anchor to={'/'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Home</Anchor>
-                {isLoggedIn() ? null : (<Anchor to={'/signin'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Log In</Anchor>)}
-                {isLoggedIn() ? null : (<Anchor to={'/register'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Register</Anchor>)}
-                {isLoggedIn() ? (<Anchor to={"/manga-form"} className="p-3 hover:bg-white hover:text-orange-600 rounded-md w-[300px]">{" "}New manga{" "}</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor to={'/mangas'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Mangas</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">My Comics</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Favorites</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor to={'/new-role'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">New Role</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor to={'/adminPanel'} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Admin Panel</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor onClick={signout} className="p-3 text-lg hover:bg-white hover:text-orange-600 rounded-md w-[300px]">Log Out</Anchor>) : null}
+                <Anchor to={'/'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Home</Anchor>
+                {isLoggedIn() ? null : (<Anchor to={'/login'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Log In</Anchor>)}
+                {isLoggedIn() ? null : (<Anchor to={'/register'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Register</Anchor>)}
+                {isLoggedIn() ? (<Anchor to={"/manga-form"} className="p-3 hover:bg-white hover:text-purple-600 rounded-md w-[300px]">{" "}New manga{" "}</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={'/mangas'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Mangas</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">My Comics</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Favorites</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={'/new-role'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">New Role</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={'/adminPanel'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Admin Panel</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor onClick={signout} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Log Out</Anchor>) : null}
               </div>
             </div>
           </div>
         )}
-        <img src="/logoDos.png" className="hidden md:block w-[193px] h-[65px] shrink-0" alt="Logo" />
-        <img src="/logoMovile.png" className="md:hidden w-[35px] h-[35px] shrink-0" alt="Logo" />
+        <img src="/LogoFastCommerce.png" className="hidden md:block w-[110px] h-[110px] shrink-0" alt="Logo" />
+        <img src="/LogoFastCommerce.png" className="md:hidden w-[35px] h-[35px] shrink-0" alt="Logo" />
       </div>
     </nav>
   );
