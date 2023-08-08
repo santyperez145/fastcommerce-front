@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, Route, useParams } from "react-router-dom";
+import { createBrowserRouter, useParams } from "react-router-dom";
 import Main from "../layouts/Main";
 import Index from "../pages/Index";
 import SignIn from "../pages/Signin";
@@ -6,6 +6,12 @@ import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import CartPage from "../pages/CartPage";
+import Dashboard from "../pages/user/Dashboard";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import CreateCategory from "../pages/admin/CreateCategory";
+import CreateProduct from "../pages/admin/CreateProduct";
+import Orders from "../pages/user/Orders";
+import { ProtectedRoute, ProtectedSignIn } from "./private";
 
 // Create a custom Route component to pass the token as a parameter
 function ResetPasswordRoute() {
@@ -26,16 +32,40 @@ const router = createBrowserRouter([
         path: '/cart-page',
         element: <CartPage />
       },
+      {
+        path: '/dashboard/user',
+        element: <Dashboard />
+      },
+      {
+        path: '/dashboard/admin',
+        element: <AdminDashboard />,
+    },
+    {
+      path: '/dashboard/admin/create-category',
+      element: <CreateCategory />
+    },
+    {
+      path: '/dashboard/admin/create-product',
+      element: <CreateProduct />
+    },
     ],
 
   },
   {
     path: '/login',
-    element: <SignIn />
+    element: (
+      <ProtectedSignIn>
+      <SignIn />
+      </ProtectedSignIn>
+  )
   },
   {
-    path: '/register',
-    element: <Register />
+    path:'/register',
+    element: (
+        <ProtectedRoute>
+        <Register />
+        </ProtectedRoute>
+    )
   },
   {
     path: '/forgot-password',

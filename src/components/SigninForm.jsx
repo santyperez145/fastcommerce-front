@@ -64,6 +64,7 @@ export default function SigninForm() {
 
   return (
     <div className="flex flex-wrap flex-col justify-center items-center w-[100%] max-h-screen bg-gray-300">
+      <img className='h-[250px]' src="/LogoFastCommerce.png" alt="" />
       <p className="text-[#1F1F1F] text-center text-[32px] not-italic font-bold leading-[normal] tracking-[1.6px]">
         Welcome <span className="text-purple-600">back!</span>
       </p>

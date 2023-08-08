@@ -97,12 +97,13 @@ function NavBar() {
                 <Anchor to={'/'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Home</Anchor>
                 {isLoggedIn() ? null : (<Anchor to={'/login'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Log In</Anchor>)}
                 {isLoggedIn() ? null : (<Anchor to={'/register'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Register</Anchor>)}
-                {isLoggedIn() ? (<Anchor to={"/manga-form"} className="p-3 hover:bg-white hover:text-purple-600 rounded-md w-[300px]">{" "}New manga{" "}</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={"/cart-page"} className="p-3 hover:bg-white hover:text-purple-600 rounded-md w-[300px]">{" "}Cart{" "}</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor to={'/mangas'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Mangas</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">My Comics</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Favorites</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor to={'/new-role'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">New Role</Anchor>) : null}
-                {isLoggedIn() ? (<Anchor to={'/adminPanel'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Admin Panel</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={'/dashboard/admin'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Admin Panel</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={'/dashboard/user'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">User Panel</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor onClick={signout} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Log Out</Anchor>) : null}
               </div>
             </div>

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateCartItem, removeFromCart } from '../redux/actions/cart.js'; // Importa las acciones
-import { api, apiUrl, endpoints } from '../utils/api.js'; // Importa los endpoints de tu archivo api.js
+import { updateCartItem, removeFromCart, setCart } from '../redux/actions/cart.js';
+import { api, apiUrl, endpoints } from '../utils/api.js';
+import { LS } from '../utils/localStorageUtils.js';
 
 const CartPage = () => {
+  const [loading, setLoading] = useState(true);
   const cartItems = useSelector(state => state.cart.items);
-  const dispatch = useDispatch(); // Obtiene la función de despacho
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  let token = LS.get('token');
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -14,7 +18,7 @@ const CartPage = () => {
 
   const handleQuantityChange = async (productId, newQuantity) => {
     try {
-      dispatch(updateCartItem({ itemId: productId, quantity: newQuantity })); // Acción de Redux para actualizar la cantidad
+      dispatch(updateCartItem({ itemId: productId, quantity: newQuantity }));
     } catch (error) {
       console.error('Error al actualizar la cantidad:', error);
     }
@@ -22,7 +26,7 @@ const CartPage = () => {
 
   const handleRemoveItem = async (productId) => {
     try {
-      dispatch(removeFromCart(productId)); // Acción de Redux para eliminar un producto
+      dispatch(removeFromCart(productId));
     } catch (error) {
       console.error('Error al eliminar el producto:', error);
     }
@@ -41,6 +45,30 @@ const CartPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await api.get(apiUrl + endpoints.getCart.replace(':user_id', user._id), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        dispatch(setCart(response.data.cart));
+        setLoading(false);
+      } catch (error) {
+        console.error('Error al obtener productos del carrito:', error);
+        setLoading(false);
+      }
+    };
+
+    if (user && token) {
+      fetchCartItems();
+    }
+  }, [user, token, dispatch]);
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+  
   return (
     <div className="flex flex-col bg-gray-300 justify-center items-center w-screen min-h-screen">
       <h1 className="text-4xl font-bold tracking-tigh text-black">Cart Products</h1>

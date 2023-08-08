@@ -6,12 +6,7 @@ export default function Carousel() {
 
     const[categories, setCategories] = useState([])
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/api/categories")
-        .then(res => setCategories(res.data.categories))
-        .catch(err => console.log(err))
-    }, [])
-
+   
     let [counter, setCounter] = useState(0)
     let next = () => (counter !== categories.length-1) ? setCounter(counter+1) : setCounter(0)
     let prev = () => (counter !== 0) ? setCounter(counter-1) : setCounter(categories.length-1)

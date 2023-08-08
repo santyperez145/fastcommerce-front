@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addToCart, updateCartItem, removeFromCart } from '../actions/cart.js';
+import { addToCart, updateCartItem, removeFromCart, fetchCartItems } from '../actions/cart.js';
 
 const initialState = {
   items: [],
@@ -10,7 +10,11 @@ const initialState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    setCart: (state, action) => {
+      state.items = action.payload;
+  },
+},
   extraReducers: (builder) => {
     builder
       // Otras acciones
@@ -28,8 +32,15 @@ const cartSlice = createSlice({
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
         // Actualizar la base de datos aquí si es necesario
+      })
+
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.cart.items;
+        // Puedes realizar otras actualizaciones en el estado aquí si es necesario
       });
   },
 });
+
 
 export default cartSlice.reducer;
