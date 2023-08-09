@@ -5,7 +5,7 @@ const CreateCategory = () => {
     return (
         <>
             <div>
-                <AdminMenu/>
+                <AdminMenu />
                 <div>CreateCategory</div>
             </div>
         </>
