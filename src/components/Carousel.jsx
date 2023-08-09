@@ -1,49 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react'
+import axios from "axios"
+import Arrow from './Arrow'
 
-const Carousel = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function Carousel() {
 
-  // Avanza al siguiente slide cada 3 segundos
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 3000);
+    const[categories, setCategories] = useState([])
 
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+   
+    let [counter, setCounter] = useState(0)
+    let next = () => (counter !== categories.length-1) ? setCounter(counter+1) : setCounter(0)
+    let prev = () => (counter !== 0) ? setCounter(counter-1) : setCounter(categories.length-1)
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images?.length - 1 : prevIndex - 1));
-  };
+    let left = "M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    let right = "M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images?.length - 1 ? 0 : prevIndex + 1));
-  };
-
-  return (
-    <div className="flex justify-center items-center z-100">
-      <div className="flex justify-center items-center w-[80vw] h-[30vh] overflow-hidden z-10">
-        {images?.map((image, index) => (
-          <div key={index} className={`absolute justify-center items-center w-[80vw] h-[30vh] object-cover ${index === currentIndex ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}
-            style={{background: `linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,1)), url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', zIndex: -1}}/>
-        ))}
-        <div className="absolute flex items-center justify-between w-[100vw] h-[20vh]">
-          <button onClick={prevSlide} className="text-orange-500 text-4xl md:text-6xl font-bold p-4 focus:outline-none">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-
-          </button>
-          <button onClick={nextSlide} className="text-orange-500 text-4xl md:text-6xl font-bold p-4 focus:outline-none">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-
-          </button>
+    return (
+    <div className="hidden lg:flex md:mt-[100px] justify-center items-center w-full h-[40vh]">
+        <div className='flex text-white w-[90%] h-[75%] rounded-md bg-purple-600 justify-around gap-[15px] items-center p-2'>
+            <button className='button' onClick={prev}>
+                <Arrow icon = {left} />
+            </button>
+            <img className='h-[120%] pb-[35px] max-w-[230px]' src={categories[counter]?.character_photo} />
+            <img className='h-[120%] pb-[35px] rounded-md max-w-[170px]' src={categories[counter]?.cover_photo} />
+            <div className='flex flex-col w-[40%] gap-4 ms-3'>
+                <p className='font-medium text-[24px]'>{categories[counter]?.name}</p>
+                <p className='w-[90%] text-[14px]'>{categories[counter]?.description}</p>
+            </div>
+            <button className='button' onClick={next}>
+                <Arrow icon = {right}/>
+            </button>
         </div>
-      </div>
     </div>
-  );
-};
-
-export default Carousel;
+  )
+}

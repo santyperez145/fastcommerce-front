@@ -3,7 +3,6 @@ import Main from "../layouts/Main";
 import Index from "../pages/Index";
 import SignIn from "../pages/Signin";
 import Register from "../pages/Register";
-import ProductDetails from "../pages/ProductsDetails";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import CartPage from "../pages/CartPage";
@@ -30,16 +29,12 @@ const router = createBrowserRouter([
         element: <Index />
       },
       {
-        path: '/cart-page',
+        path: '/cart-page/:user_id',
         element: <CartPage />
       },
       {
         path: '/dashboard/user',
         element: <Dashboard />
-      },
-      {
-        path:'/products/:id',
-        element: <ProductDetails />   
       },
       {
         path: '/dashboard/admin',

@@ -108,7 +108,7 @@ const CartPage = () => {
                     <div className="flex">
                       <button
                         type="button"
-                        className="font-medium text-purple-600 hover:text-purple-500"
+                        className="font-medium text-[rgb(92,110,141)] hover:text-[rgb(92,110,141)]"
                         onClick={() => handleRemoveItem(item.id)}
                       >
                         Remove
@@ -128,19 +128,19 @@ const CartPage = () => {
           <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
           <div className="mt-6">
             <button
-              className="flex items-center justify-center rounded-md border border-transparent bg-purple-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-purple-700"
+              className="flex items-center justify-center rounded-md border border-transparent bg-[rgb(92,110,141)] px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-purple-700"
               onClick={handleCheckout}
             >
               Checkout
             </button>
           </div>
-          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+          <div className="mt-6 flex justify-center text-center text-sm text-[rgb(92,110,141)]">
             <p>
               or
               <Link to="/">
                 <button
                   type="button"
-                  className="font-medium text-purple-600 hover:text-purple-500"
+                  className="font-medium text-[rgb(92,110,141)] hover:text-[rgb(92,110,141)]"
                 >
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>

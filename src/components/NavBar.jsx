@@ -71,7 +71,7 @@ function NavBar() {
   }, []);
 
   return (
-    <nav className="w-full text-white absolute flex flex-col items-center bg-orange-400 justify-around">
+    <nav className="w-full text-white absolute flex flex-col items-center bg-[rgb(92,110,141)] justify-around">
       <div className="flex w-[90%] justify-between items-center p-6">
         <img src="/Menu.svg" onClick={() => setDisplay(!display)} alt="Menu" />
         {display && (
@@ -97,7 +97,7 @@ function NavBar() {
                 <Anchor to={'/'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Home</Anchor>
                 {isLoggedIn() ? null : (<Anchor to={'/login'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Log In</Anchor>)}
                 {isLoggedIn() ? null : (<Anchor to={'/register'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Register</Anchor>)}
-                {isLoggedIn() ? (<Anchor to={"/cart-page"} className="p-3 hover:bg-white hover:text-purple-600 rounded-md w-[300px]">{" "}Cart{" "}</Anchor>) : null}
+                {isLoggedIn() ? (<Anchor to={`/cart-page/${user._id}`} className="p-3 hover:bg-white hover:text-purple-600 rounded-md w-[300px]">{" "}Cart{" "}</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor to={'/mangas'} className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Mangas</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">My Comics</Anchor>) : null}
                 {isLoggedIn() ? (<Anchor className="p-3 text-lg hover:bg-white hover:text-purple-600 rounded-md w-[300px]">Favorites</Anchor>) : null}
