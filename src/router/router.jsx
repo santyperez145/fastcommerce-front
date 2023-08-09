@@ -3,6 +3,7 @@ import Main from "../layouts/Main";
 import Index from "../pages/Index";
 import SignIn from "../pages/Signin";
 import Register from "../pages/Register";
+import ProductDetails from "../pages/ProductsDetails";
 
 
 
@@ -15,7 +16,11 @@ const router = createBrowserRouter([
             {
                 path:'/',
                 element: <Index/>
-            },  
+            },
+            {
+                path:'/products/:id',
+                element: <ProductDetails />   
+            },
         ],
         
     },
