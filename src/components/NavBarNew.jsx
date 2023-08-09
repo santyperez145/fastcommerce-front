@@ -73,9 +73,9 @@ const NavBar = () => {
   return (
     <nav className="flex bg-[rgb(92,110,141)] items-center justify-center h-[13vh] ">
       {/* Logo */}
-      <a href="#" className="flex items-center">
+      <Anchor to="/" href="#" className="flex items-center">
         <img src="/src/assets/images/logo.png" alt="Ecommerce Logo" className="h-[10vh] pe-20" />
-      </a>
+      </Anchor>
 
       {/* Search Bar */}
       <div className="flex w-[30vw] ">

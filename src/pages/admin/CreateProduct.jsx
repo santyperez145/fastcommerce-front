@@ -6,13 +6,16 @@ import { api, apiUrl } from '../../utils/api';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewProductModalOpen, setIsNewProductModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [editedProduct, setEditedProduct] = useState({
     name: '',
-    description: "",
-    cover_photo: "",
+    description: [],
+    cover_photo: [],
+    category_id: '',
     price: 0,
     brand: '',
     stock: 0,
@@ -21,8 +24,9 @@ const ProductsPage = () => {
 
   const [newProduct, setNewProduct] = useState({
     name: '',
-    description: "",
-    cover_photo: "''",
+    description: [],
+    cover_photo: [],
+    category_id: '',
     price: 0,
     brand: '',
     stock: 0,
@@ -31,14 +35,24 @@ const ProductsPage = () => {
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   const fetchProducts = async () => {
     try {
-      const response = await api.get(apiUrl + 'products');
+      const response = await api.get(apiUrl + 'products/readadmin');
       setProducts(response.data.response);
     } catch (error) {
       console.error('Error fetching products:', error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get(apiUrl + 'categories');
+      setCategories(response.data.response);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
     }
   };
 
@@ -53,12 +67,12 @@ const ProductsPage = () => {
     setEditProduct(null);
     setEditedProduct({
       name: '',
-      description: "",
-      cover_photo: "",
+      description: [],
+      cover_photo: [],
+      category_id: '',
       price: 0,
       brand: '',
       stock: 0,
-      favorite: false,
       offer: '',
     });
   };
@@ -73,10 +87,10 @@ const ProductsPage = () => {
       name: '',
       description: '',
       cover_photo: '',
+      category_id: '',
       price: 0,
       brand: '',
       stock: 0,
-      favorite: false,
       offer: '',
     });
   };
@@ -121,22 +135,19 @@ const ProductsPage = () => {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Cover Photo</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th className='py-[20px] px-[50px]'>Name</th>
+                <th className='py-[20px] px-[50px]'>Cover Photo</th>
+                <th className='py-[20px] px-[50px]'>Price</th>
+                <th className='py-[20px] px-[50px]'>Actions</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product.name}</td>
-                  <td>{product.cover_photo}</td>
-                  <td>{product.price}</td>
-                  <td>
-                    <button onClick={() => openEditModal(product)}>Edit</button>
-                    <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
-                  </td>
+                <tr>
+                  <td className='py-[20px] px-[50px]' key={product._id}>{product.name}</td>
+                  <td className='py-[20px] px-[50px]' key={product.cover_photo}><img className='h-[100px] w-[100px]' src={product.cover_photo} alt={product.cover_photo} /></td>
+                  <td className='py-[20px] px-[50px]' key={product.cover_photo}>{product.price}</td>
+                  <td className='py-[20px] px-[50px]'><button onClick={() => openEditModal(product)}>Edit</button><button onClick={() => handleDeleteProduct(product._id)}>Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -163,6 +174,16 @@ const ProductsPage = () => {
               value={editedProduct.cover_photo}
               onChange={(e) => setEditedProduct({ ...editedProduct, cover_photo: e.target.value })}
             />
+            <select
+                value={selectedCategoryId}
+                onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                    {category.name}
+                </option>
+            ))}
+            </select>
             <input
               type="number"
               value={editedProduct.price}
@@ -211,6 +232,16 @@ const ProductsPage = () => {
               value={newProduct.cover_photo}
               onChange={(e) => setNewProduct({ ...newProduct, cover_photo: e.target.value })}
             />
+            <select
+                value={selectedCategoryId}
+                onChange={(e) => setNewProduct({...newProduct, category_id: e.target.value })}>
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                    {category.name}
+                </option>
+            ))}
+            </select>
             <input
               type="number"
               placeholder="Price"
