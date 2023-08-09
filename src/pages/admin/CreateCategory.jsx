@@ -63,10 +63,12 @@ const CategoriesPage = () => {
       description: '',
       cover_photo: '',
     });
+
   };
 
   const handleEditCategory = async () => {
     try {
+
       await api.put(apiUrl + `categories/edit/${editCategory._id}`, editedCategory);
       fetchCategories();
       closeEditModal();
@@ -112,6 +114,7 @@ const CategoriesPage = () => {
               </tr>
             </thead>
             <tbody>
+
           {categories.map((category) => (
             <tr>
             <td className='py-[20px] px-[50px]' key={category._id}>
