@@ -5,7 +5,7 @@ const Users = () => {
     return (
         <>
             <div>
-                <AdminMenu/>.
+                <AdminMenu />
                 <h1>All Users</h1>
             </div>
         </>

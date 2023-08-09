@@ -5,7 +5,7 @@ const CreateProduct = () => {
     return (
         <>
             <div>
-                <AdminMenu/>
+            <AdminMenu />
                 <h1>CreateProduct</h1>
             </div>
         </>
