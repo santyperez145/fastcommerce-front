@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { api, apiUrl, endpoints } from '../utils/api';
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ match }) => {
+
+  const [product, setProduct] = useState({}); // Cambiado a un objeto único en lugar de una lista
+
+  useEffect(() => {
+    const id = match.params.id; // Obtener el ID del parámetro de la URL
+    fetchProduct(id);
+  }, [match.params.id]); // Agregar match.params.id a la dependencia para que se actualice cuando cambie
+
+  const fetchProduct = async (id) => {
+    try {
+      const response = await api.get(apiUrl + `products/${id}`);
+      setProduct(response.data.response);
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    }
+  };
+
   return (
     <div className="container mx-auto mt-8">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
@@ -8,7 +26,7 @@ const ProductDetails = ({ product }) => {
           <div className="md:flex-shrink-0">
             <img
               className="h-48 w-full object-cover md:w-48"
-              src={product.image} // Aquí debes usar la URL de la imagen del producto
+              src={product.cover_photo} // Aquí debes usar la URL de la imagen del producto
               alt={product.name} // Agrega el nombre del producto como alt para accesibilidad
             />
           </div>

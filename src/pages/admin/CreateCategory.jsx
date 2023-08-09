@@ -10,10 +10,18 @@ const CategoriesPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [editCategory, setEditCategory] = useState(null);
-  const [editedCategoryName, setEditedCategoryName] = useState('');
-  const [newCategoryName, setNewCategoryName] = useState('');
-  const [newCategoryDescription, setNewCategoryDescription] = useState('');
-  const [newCategoryCoverPhoto, setNewCategoryCoverPhoto] = useState('');
+  
+  const [editedCategory, setEditedCategory] = useState({
+    name: '',
+    description: '',
+    cover_photo: '',
+  });
+
+  const [newCategory, setNewCategory] = useState({
+    name: '',
+    description: '',
+    cover_photo: '',
+  });
 
   useEffect(() => {
     fetchCategories();
@@ -30,14 +38,18 @@ const CategoriesPage = () => {
 
   const openEditModal = (category) => {
     setEditCategory(category);
-    setEditedCategoryName(category.name);
+    setEditedCategory(category);
     setIsEditModalOpen(true);
   };
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
     setEditCategory(null);
-    setEditedCategoryName('');
+    setEditedCategory({
+      name: '',
+      description: '',
+      cover_photo: '',
+    });
   };
 
   const openNewCategoryModal = () => {
@@ -46,18 +58,18 @@ const CategoriesPage = () => {
 
   const closeNewCategoryModal = () => {
     setIsNewCategoryModalOpen(false);
-    setNewCategoryName('');
-    setNewCategoryDescription('');
-    setNewCategoryCoverPhoto('');
+    setNewCategory({
+      name: '',
+      description: '',
+      cover_photo: '',
+    });
+
   };
 
   const handleEditCategory = async () => {
     try {
-      const updatedCategory = {
-        ...editCategory,
-        name: editedCategoryName,
-      };
-      await api.put(apiUrl + `categories/edit/${editCategory._id}`, updatedCategory);
+
+      await api.put(apiUrl + `categories/edit/${editCategory._id}`, editedCategory);
       fetchCategories();
       closeEditModal();
     } catch (error) {
@@ -67,11 +79,6 @@ const CategoriesPage = () => {
 
   const handleCreateCategory = async () => {
     try {
-      const newCategory = {
-        name: newCategoryName,
-        description: newCategoryDescription,
-        cover_photo: newCategoryCoverPhoto,
-      };
       await api.post(apiUrl + 'categories/create', newCategory);
       fetchCategories();
       closeNewCategoryModal();
@@ -98,17 +105,28 @@ const CategoriesPage = () => {
         <button onClick={openNewCategoryModal} className='bg-white w-[150px] h-[50px] text-black'>New Category</button>
         <div className='flex flex-col justify-center items-center'>
         <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Cover Photo</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+
           {categories.map((category) => (
             <tr>
             <td className='py-[20px] px-[50px]' key={category._id}>
               {category.name}</td>
-              <td className='py-[20px] px-[50px]' key={category.cover_photo}>
-              {category.cover_photo}</td>
+              <td className='py-[20px] px-[50px]' key={category.cover_photo}><img className='h-[100px] w-[100px]' src={category.cover_photo} alt={category.cover_photo} />
+              </td>
               <td className='py-[20px] px-[50px]'><button onClick={() => openEditModal(category)}>Edit</button></td>
               <td className='py-[20px] px-[50px]'><button onClick={() => handleDeleteCategory(category._id)}>Delete</button></td>
             
             </tr>
           ))}
+        </tbody>
         </table>
         </div>
         
@@ -118,12 +136,21 @@ const CategoriesPage = () => {
           contentLabel="Edit Category"
         >
           {editCategory && (
-            <div>
+            <div className='bg-blue'>
               <input
                 type="text"
-                value={editedCategoryName}
-                onChange={(e) => setEditedCategoryName(e.target.value)}
+                value={editedCategory.name}
+                onChange={(e) => setEditedCategory({ ...editedCategory, name: e.target.value })}
               />
+              <textarea
+              value={editedCategory.description}
+              onChange={(e) => setEditedCategory({ ...editedCategory, description: e.target.value })}
+            />
+            <input
+              type="text"
+              value={editedCategory.cover_photo}
+              onChange={(e) => setEditedCategory({ ...editedCategory, cover_photo: e.target.value })}
+            />
               <button onClick={handleEditCategory}>Save</button>
               <button onClick={closeEditModal}>Cancel</button>
             </div>
@@ -135,22 +162,22 @@ const CategoriesPage = () => {
           contentLabel="Create Category"
         >
           <div>
-            <input
+          <input
               type="text"
-              placeholder="Category Name"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
+              placeholder="Product Name"
+              value={newCategory.name}
+              onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
             />
             <textarea
               placeholder="Description"
-              value={newCategoryDescription}
-              onChange={(e) => setNewCategoryDescription(e.target.value)}
+              value={newCategory.description}
+              onChange={(e) => setNewCategory({ ...newCategory, description: e.target.value })}
             />
             <input
               type="text"
-              placeholder="Cover Photo URL"
-              value={newCategoryCoverPhoto}
-              onChange={(e) => setNewCategoryCoverPhoto(e.target.value)}
+              placeholder="Cover Photo"
+              value={newCategory.cover_photo}
+              onChange={(e) => setNewCategory({ ...newCategory, cover_photo: e.target.value })}
             />
             <button onClick={handleCreateCategory}>Create</button>
             <button onClick={closeNewCategoryModal}>Cancel</button>
