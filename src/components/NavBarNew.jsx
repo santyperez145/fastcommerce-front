@@ -120,8 +120,8 @@ const NavBar = () => {
               <Anchor to="/dashboard/admin" className="text-start block px-9 py-2 text-gray-800 hover:bg-orange-300">
                 Admin Panel
               </Anchor>
-              <Anchor to="#" className="text-start block px-9 py-2 text-gray-800 hover:bg-orange-300">
-                Settings
+              <Anchor to="/dashboard/user" className="text-start block px-9 py-2 text-gray-800 hover:bg-orange-300">
+                User Panel
               </Anchor>
               <Anchor onClick={signout} className="text-start block px-9 py-2 text-gray-800 hover:bg-orange-300">
                 Log Out

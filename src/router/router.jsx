@@ -10,7 +10,7 @@ import CartPage from "../pages/CartPage";
 import Dashboard from "../pages/user/Dashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateCategory from "../pages/admin/CreateCategory";
-import CreateProduct from "../pages/admin/CreateProduct";
+import ProductsPage from "../pages/admin/CreateProduct";
 import Orders from "../pages/user/Orders";
 import { ProtectedRoute, ProtectedSignIn } from "./private";
 
@@ -46,12 +46,12 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
     },
     {
-      path: '/dashboard/admin/create-category',
+      path: '/dashboard/admin/categories',
       element: <CreateCategory />
     },
     {
       path: '/dashboard/admin/create-product',
-      element: <CreateProduct />
+      element: <ProductsPage />
     },
     ],
 
