@@ -6,12 +6,12 @@ import { Outlet } from "react-router-dom"
 
 export default function Main(){
     return (
-    <>
-        <div className="flex-col min-h-screen w-full justify-between items-center">
-            <NavBarNew />
-            <Outlet />
-        </div>
-        <Footer />
-    </>
+      <>
+          <div className="flex-col min-h-screen w-full justify-between items-center">
+              <NavBarNew />
+              <Outlet />
+          </div>
+          <Footer />
+      </>
     )
 }
