@@ -4,17 +4,44 @@ import UserInfo from '../../layouts/UserInfo';
 import AdminMenu from '../../layouts/AdminMenu';
 import { api, apiUrl } from '../../utils/api';
 
+const customModalStyles = {
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'rgb(45, 55, 72)', // Cambia el color de fondo del modal
+    border: '1px solid #ccc', // Cambia el borde del modal
+    borderRadius: '10px', // Cambia el radio de borde del modal
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Cambia la sombra del modal
+    padding: '20px', // Cambia el relleno interno del modal
+    width: '400px', // Ancho máximo del modal
+  }
+};
+
+const modalContentStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
+  alignItems: 'center',
+  width: '100%', // Ancho del contenido del modal
+};
+
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewProductModalOpen, setIsNewProductModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [editedProduct, setEditedProduct] = useState({
     name: '',
-    description: [],
+    description: {},
     cover_photo: [],
     category_id: '',
     price: 0,
@@ -25,7 +52,7 @@ const ProductsPage = () => {
 
   const [newProduct, setNewProduct] = useState({
     name: '',
-    description: [],
+    description: {},
     cover_photo: [],
     category_id: '',
     price: 0,
@@ -68,7 +95,7 @@ const ProductsPage = () => {
     setEditProduct(null);
     setEditedProduct({
       name: '',
-      description: [],
+      description: {},
       cover_photo: [],
       category_id: '',
       price: 0,
@@ -86,8 +113,8 @@ const ProductsPage = () => {
     setIsNewProductModalOpen(false);
     setNewProduct({
       name: '',
-      description: '',
-      cover_photo: '',
+      description: {},
+      cover_photo: [],
       category_id: '',
       price: 0,
       brand: '',
@@ -126,10 +153,10 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen bg-[url('/fondo-admin.jpg')] bg-cover">
+    <div className="flex flex-col items-center bg-[url('/fondo-admin.jpg')] bg-cover py-9">
       <UserInfo />
       <AdminMenu />
-      <h1 className='flex justify-center items-center text-center text-white font-bold text-2xl'>Products</h1>
+      <h1 className='flex justify-center items-center text-center text-black font-bold text-2xl py-3'>Products</h1>
       <div className="lg:text-lg bg-gray-800 flex flex-col items-center text-white p-6 min-h-[500px] w-[80%] rounded-md shadow-lg">
         <button onClick={openNewProductModal} className='bg-white w-[150px] h-[50px] text-black'>New Product</button>
         <div className='flex flex-col justify-center items-center'>
@@ -139,16 +166,18 @@ const ProductsPage = () => {
                 <th className='py-[20px] px-[50px]'>Name</th>
                 <th className='py-[20px] px-[50px]'>Cover Photo</th>
                 <th className='py-[20px] px-[50px]'>Price</th>
-                <th className='py-[20px] px-[50px]'>Actions</th>
+                <th className='py-[20px] px-[50px]'>Edit</th>
+                <th className='py-[20px] px-[50px]'>Delete</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
                 <tr>
-                  <td className='py-[20px] px-[50px]' key={product._id}>{product.name}</td>
-                  <td className='py-[20px] px-[50px]' key={product.cover_photo}><img className='h-[100px] w-[100px]' src={product.cover_photo} alt={product.cover_photo} /></td>
-                  <td className='py-[20px] px-[50px]' key={product.cover_photo}>{product.price}</td>
-                  <td className='py-[20px] px-[50px]'><button onClick={() => openEditModal(product)}>Edit</button><button onClick={() => handleDeleteProduct(product._id)}>Delete</button></td>
+                  <td className='text-center py-[20px] px-[50px]' key={product._id}>{product.name}</td>
+                  <td className='text-center py-[20px] px-[50px]' key={product.cover_photo}><img className='h-[100px] w-[100px] rounded-full' src={product.cover_photo[0]} alt={product.cover_photo} /></td>
+                  <td className='text-center py-[20px] px-[50px]' key={product.price}>${product.price}</td>
+                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => openEditModal(product)}>Edit</button></td>
+                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => handleDeleteProduct(product._id)}>Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -159,25 +188,42 @@ const ProductsPage = () => {
           isOpen={isEditModalOpen}
           onRequestClose={closeEditModal}
           contentLabel="Edit Product"
+          style={customModalStyles}
         >
-          <div>
+          <div style={modalContentStyles}>
             <input
               type="text"
               value={editedProduct.name}
+              placeholder='Name'
               onChange={(e) => setEditedProduct({ ...editedProduct, name: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <textarea
-              value={editedProduct.description}
-              onChange={(e) => setEditedProduct({ ...editedProduct, description: e.target.value })}
+            type="text"
+            value={editedProduct.description.text}
+            placeholder='Description'
+            onChange={(e) => setEditedProduct({ ...editedProduct, description: { ...editedProduct.description, text: e.target.value } })}
+            className='min-w-[15rem] resize-none'
+            />
+            <input
+            type="text"
+            value={editedProduct.description.material1}
+            placeholder='Material 1'
+            onChange={(e) => setEditedProduct({ ...editedProduct, description: { ...editedProduct.description, material1: e.target.value } })}
+            className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
-              value={editedProduct.cover_photo}
-              onChange={(e) => setEditedProduct({ ...editedProduct, cover_photo: e.target.value })}
+              value={editedProduct.cover_photo.join(', ')}
+              placeholder='Cover Photo. If you insert many, split with ","'
+              onChange={(e) => setEditedProduct({ ...editedProduct, cover_photo: e.target.value.split(', ') })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <select
-                value={selectedCategoryId}
-                onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                value={editedProduct.category_id}
+                onChange={(e) => setEditedProduct({ ...editedProduct, category_id: e.target.value })}
+                className='min-w-[15rem] h-[2.5rem]'
+                >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -188,25 +234,33 @@ const ProductsPage = () => {
             <input
               type="number"
               value={editedProduct.price}
+              placeholder='Price'
               onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
               value={editedProduct.brand}
+              placeholder='Brand'
               onChange={(e) => setEditedProduct({ ...editedProduct, brand: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="number"
               value={editedProduct.stock}
+              placeholder='Stock'
               onChange={(e) => setEditedProduct({ ...editedProduct, stock: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
               value={editedProduct.offer}
+              placeholder='Offer'
               onChange={(e) => setEditedProduct({ ...editedProduct, offer: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
-            <button onClick={handleEditProduct}>Save</button>
-            <button onClick={closeEditModal}>Cancel</button>
+            <button className='bg-green-500 h-[2rem] w-[10rem]' onClick={handleEditProduct}>Save</button>
+            <button className='bg-red-500 px-6 py-2 h-[2rem] w-[10rem]' onClick={closeEditModal}>Cancel</button>
           </div>
         </Modal>
         {/* New Product Modal */}
@@ -214,28 +268,40 @@ const ProductsPage = () => {
           isOpen={isNewProductModalOpen}
           onRequestClose={closeNewProductModal}
           contentLabel="Create Product"
+          style={customModalStyles}
         >
-          <div>
+          <div style={modalContentStyles}>
             <input
               type="text"
               placeholder="Product Name"
               value={newProduct.name}
               onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <textarea
-              placeholder="Description"
-              value={newProduct.description}
-              onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+              placeholder="Main Description"
+              value={newProduct.description.text}
+              onChange={(e) => setNewProduct({ ...newProduct, description: { ...newProduct.description, text: e.target.value } })}
+              className='min-w-[15rem] resize-none'
+            />
+            <input
+              placeholder="Material 1"
+              value={newProduct.description.material1}
+              onChange={(e) => setNewProduct({ ...newProduct, description: { ...newProduct.description, material1: e.target.value } })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
-              placeholder="Cover Photo"
-              value={newProduct.cover_photo}
-              onChange={(e) => setNewProduct({ ...newProduct, cover_photo: e.target.value })}
+              placeholder='Cover Photo. If you insert many, split with ","'
+              value={newProduct.cover_photo.join(', ')}
+              onChange={(e) => setNewProduct({ ...newProduct, cover_photo: e.target.value.split(', ') })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <select
-                value={selectedCategoryId}
-                onChange={(e) => setNewProduct({...newProduct, category_id: e.target.value })}>
+                value={newProduct.category_id}
+                onChange={(e) => setNewProduct({...newProduct, category_id: e.target.value })}
+                className='min-w-[15rem] h-[2.5rem]'
+                >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -248,27 +314,31 @@ const ProductsPage = () => {
               placeholder="Price"
               value={newProduct.price}
               onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
               placeholder="Brand"
               value={newProduct.brand}
               onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="number"
               placeholder="Stock"
               value={newProduct.stock}
               onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
-              placeholder="Offer ID"
+              placeholder="Offer"
               value={newProduct.offer}
               onChange={(e) => setNewProduct({ ...newProduct, offer: e.target.value })}
+              className='min-w-[15rem] h-[2.5rem]'
             />
-            <button onClick={handleCreateProduct}>Create</button>
-            <button onClick={closeNewProductModal}>Cancel</button>
+            <button className='bg-green-500 h-[2rem] w-[10rem]' onClick={handleCreateProduct}>Create</button>
+            <button className='bg-red-500 px-6 py-2 h-[2rem] w-[10rem]' onClick={closeNewProductModal}>Cancel</button>
           </div>
         </Modal>
       </div>

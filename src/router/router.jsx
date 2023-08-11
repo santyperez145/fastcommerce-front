@@ -30,6 +30,30 @@ const router = createBrowserRouter([
         element: <Index />
       },
       {
+        path: '/login',
+        element: (
+          <ProtectedSignIn>
+          <SignIn />
+          </ProtectedSignIn>
+      )
+      },
+      {
+        path:'/register',
+        element: (
+            <ProtectedRoute>
+            <Register />
+            </ProtectedRoute>
+        )
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPassword />
+      },
+      {
+        path: '/reset-password/:token', // Use a parameter in the path
+        element: <ResetPasswordRoute />
+      },
+      {
         path: '/cart-page',
         element: <CartPage />
       },
@@ -56,30 +80,7 @@ const router = createBrowserRouter([
     ],
 
   },
-  {
-    path: '/login',
-    element: (
-      <ProtectedSignIn>
-      <SignIn />
-      </ProtectedSignIn>
-  )
-  },
-  {
-    path:'/register',
-    element: (
-        <ProtectedRoute>
-        <Register />
-        </ProtectedRoute>
-    )
-  },
-  {
-    path: '/forgot-password',
-    element: <ForgotPassword />
-  },
-  {
-    path: '/reset-password/:token', // Use a parameter in the path
-    element: <ResetPasswordRoute />
-  },
+  
 ]);
 
 export default router;

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { api, apiUrl, endpoints } from '../utils/api';
+import { useParams } from "react-router-dom";
 
-const ProductDetails = ({ match }) => {
-
-  const [product, setProduct] = useState({}); // Cambiado a un objeto único en lugar de una lista
+const ProductDetails = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
 
   useEffect(() => {
-    const id = match.params.id; // Obtener el ID del parámetro de la URL
-    fetchProduct(id);
-  }, [match.params.id]); // Agregar match.params.id a la dependencia para que se actualice cuando cambie
+    fetchProduct();
+  }, []);
 
-  const fetchProduct = async (id) => {
+  const fetchProduct = async () => {
     try {
       const response = await api.get(apiUrl + `products/${id}`);
       setProduct(response.data.response);
@@ -26,8 +26,8 @@ const ProductDetails = ({ match }) => {
           <div className="md:flex-shrink-0">
             <img
               className="h-48 w-full object-cover md:w-48"
-              src={product.cover_photo} // Aquí debes usar la URL de la imagen del producto
-              alt={product.name} // Agrega el nombre del producto como alt para accesibilidad
+              src={product.cover_photo}
+              alt={product.name}
             />
           </div>
           <div className="p-8">
@@ -37,9 +37,14 @@ const ProductDetails = ({ match }) => {
             <h1 className="block mt-1 text-lg leading-tight font-medium text-black">
               {product.name}
             </h1>
-            <p className="mt-2 text-gray-500">{product.description}</p>
+            <p className="mt-2 text-gray-500">{product.description.resum}</p>
             <p className="mt-4 font-bold text-gray-700">${product.price}</p>
-            {/* Agrega aquí cualquier otra información que desees mostrar */}
+            
+            {/* Renderiza propiedades específicas del objeto product */}
+            <p>Material: {product.description.material}</p>
+            <p>Condición: {product.description.condition}</p>
+            <p>Dimensiones: {product.description.dimensions}</p>
+            <p>Color: {product.description.color}</p>
           </div>
         </div>
       </div>

@@ -11,8 +11,9 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const photo = useSelector((state) => state.auth.photo);
-  const token = LS.get('token');
   const navigate = useNavigate();
+
+  const token = LS.get('token');
 
   const isLoggedIn = () => {
     return token && user;
@@ -52,29 +53,29 @@ const NavBar = () => {
     }
   };
 
-  useEffect(() => {
-    if (!user) fetchUserData();
-  }, []);
+    const fetchUserData = async () => {
+      try {
+        const response = await api.get(apiUrl + endpoints.logintoken, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const { user, photo } = response.data.response;
 
-  const fetchUserData = async () => {
-    try {
-      const response = await api.get(apiUrl + endpoints.login, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const { user, photo } = response.data.response;
+        dispatch(setUser(user));
+        dispatch(setPhoto(photo));
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      dispatch(setUser(user));
-      dispatch(setPhoto(photo));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    useEffect(() => {
+      if (!user) fetchUserData();
+    }, []);
 
   return (
     <nav className="flex bg-[rgb(92,110,141)] items-center justify-center h-[13vh] ">
       {/* Logo */}
       <Anchor to="/" href="#" className="flex items-center">
-        <img src="/src/assets/images/logo.png" alt="Ecommerce Logo" className="h-[10vh] pe-20" />
+        <img src="/LogoFastCommerce.png" alt="Ecommerce Logo" className="h-[15vh] pe-20" />
       </Anchor>
 
       {/* Search Bar */}
@@ -113,7 +114,7 @@ const NavBar = () => {
           <img src={photo} alt="User Avatar" className=" w-[35px] sm:w-[50px] rounded-full cursor-pointer" onClick={handleUserMenuToggle} />
           {userMenuOpen && (
             <div className="absolute w-[15vw] z-20 content-start top-10 right-0 bg-white border border-gray-200 rounded-lg shadow-md p-2">
-              <p className="block py-2 text-gray-800">{user.email}</p>
+              <p className="block py-2 text-center text-gray-800">Hi, {user.name}</p>
               <Anchor to="/cart-page" className="text-start block px-9 py-2 text-gray-800 hover:bg-orange-300">
                 Cart
               </Anchor>

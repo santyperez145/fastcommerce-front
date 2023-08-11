@@ -11,7 +11,7 @@ export const endpoints = {
     getCart: "cart/:user_id",
     addToCart: "cart/add-to-cart",
     updateCart: "cart/update-cart-item",
-    removeCart: "cart/remove-cart-item",
+    removeCart: "cart/remove-cart-item/:product_id",
 
 };
 
