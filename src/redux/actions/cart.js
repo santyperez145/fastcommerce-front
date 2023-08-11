@@ -28,7 +28,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async ({ productId, 
   export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (itemId) => {
     try {
       let token = LS.get('token')
-      const response = await api.put(apiUrl + endpoints.removeCart, { itemId }, {
+      const response = await api.put(apiUrl + endpoints.removeCart.replace(':product_id', itemId ), { itemId }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
