@@ -14,8 +14,6 @@ const NavBar = () => {
   let user = JSON.parse(localStorage.getItem("user"));
   console.log(user)
 
-  const token = LS.get('token');
-
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
