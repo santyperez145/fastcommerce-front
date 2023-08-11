@@ -6,7 +6,7 @@ import NavBar from "../../components/NavBar";
 import UserInfo from "../../layouts/UserInfo";
 
 const AdminDashboard = () => {
-    const user = useSelector((state) => state.auth.user);
+    let user = JSON.parse(localStorage.getItem("user"));
 
     let token = LS.get('token')
 

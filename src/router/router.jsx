@@ -3,7 +3,7 @@ import Main from "../layouts/Main";
 import Index from "../pages/Index";
 import SignIn from "../pages/Signin";
 import Register from "../pages/Register";
-import ProductDetails from "../pages/ProductsDetails";
+import ProductDetails from "../pages/products/ProductDetail";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import CartPage from "../pages/CartPage";

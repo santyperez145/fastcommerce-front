@@ -111,10 +111,10 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen bg-[url('/fondo-admin.jpg')] bg-cover">
+    <div className="flex flex-col items-center py-9 bg-[url('/fondo-admin.jpg')] bg-cover">
       <UserInfo />
       <AdminMenu />
-      <h1 className='flex justify-center items-center text-center text-white font-bold text-2xl'>Products</h1>
+      <h1 className='flex justify-center items-center text-center text-black font-bold text-2xl py-3'>Products</h1>
       <div className="lg:text-lg bg-gray-800 flex flex-col items-center text-white p-6 min-h-[500px] w-[80%] rounded-md shadow-lg">
         <button onClick={openNewProductModal} className='bg-white w-[150px] h-[50px] text-black'>New Product</button>
         <div className='flex flex-col justify-center items-center'>

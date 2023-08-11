@@ -9,7 +9,7 @@ const CartPage = () => {
   const [loading, setLoading] = useState(true);
   const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
+  let user = JSON.parse(localStorage.getItem("user"));
   let token = LS.get('token');
 
   const calculateTotal = () => {
