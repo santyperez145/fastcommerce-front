@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, apiUrl, endpoints } from '../../utils/api.js'; // Importa los endpoints de tu archivo api.js
 import { LS } from '../../utils/localStorageUtils.js';
+
 export const addToCart = createAsyncThunk('cart/addToCart', async ({ productId, quantity }) => {
     try {
       let token = LS.get('token')
@@ -55,3 +56,36 @@ export const setCart = (cartItems) => {
     payload: cartItems,
   };
 };
+
+export const fetchProductDetails = createAsyncThunk(
+  'cart/fetchProductDetails',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await api.get(apiUrl + `cart/cartdetails/${productId}`);
+      return response.data.response; // Esto debería ser un objeto con los detalles del producto
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchAllProductDetails = createAsyncThunk(
+  'cart/fetchAllProductDetails',
+  async (cartItems, { dispatch }) => {
+    try {
+      const updatedItems = await Promise.all(
+        cartItems.map(async (item) => {
+          const product = await dispatch(fetchProductDetails(item.product._id));
+          return {
+            ...item,
+            product,
+          };
+        })
+      );
+
+      return updatedItems;
+    } catch (error) {
+      throw error;
+    }
+  }
+);

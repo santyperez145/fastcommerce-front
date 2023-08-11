@@ -41,9 +41,10 @@ export default function SigninForm() {
 
         const { user, photo, token } = response.data.response;
 
-        LS.add('token', token)
-        dispatch(setUser(user));
-        dispatch(setPhoto(photo));
+        localStorage.setItem('token', JSON.stringify(response.data.response.token))
+        localStorage.setItem('user', JSON.stringify(response.data.response.user))
+        //dispatch(setUser(user));
+        //dispatch(setPhoto(photo));
 
         navigate('/');
       } else {
