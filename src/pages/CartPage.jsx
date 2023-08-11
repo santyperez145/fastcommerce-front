@@ -8,12 +8,13 @@ import { Link } from 'react-router-dom';
 const CartPage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const cartItems = useSelector(state => state.cart.items);
-  const user = useSelector(state => state.auth.user);
+  const cartItems = useSelector(state => state?.cart?.items);
+  let user = JSON.parse(localStorage.getItem("user"));
   let token = LS.get('token');
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+
   };
 
   /*const handleQuantityChange = async (productId, newQuantity) => {
@@ -73,10 +74,11 @@ const CartPage = () => {
           <ul role="list" className="-my-6 divide-y divide-gray-200">
             {cartItems.map((item) => (
               <li key={item._id} className="flex py-6">
+
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
-                    src={item.product.cover_photo[0]}
-                    alt={item.product.name}
+                    src={item?.product?.cover_photo[0]}
+                    alt={item?.product?.name}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
@@ -89,6 +91,7 @@ const CartPage = () => {
                     <div className="mt-1 text-sm text-gray-500">
                       <p>Material: {item.product.description.material}</p>
                       <p>Condition: {item.product.description.condition}</p>
+
                       {/* Agregar más valores de descripción según sea necesario */}
                     </div>
                   </div>
@@ -100,7 +103,7 @@ const CartPage = () => {
                       <button
                         type="button"
                         className="font-medium text-purple-600 hover:text-purple-500"
-                        onClick={() => handleRemoveItem(item.product._id)}
+                        onClick={() => handleRemoveItem(item?.product._id)}
                       >
                         Remove
                       </button>

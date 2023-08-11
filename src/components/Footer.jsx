@@ -5,7 +5,7 @@ export default function App() {
   return (
     <footer className="bg-neutral-100 text-center text-neutral-600 dark:bg-neutral-600 dark:text-neutral-200 lg:text-left">
         <a href="/">
-            <div className="flex justify-around items-center content-center w-full h-[5vh] bg-orange-600 hover:bg-[rgb(92,110,141)]">
+            <div className="flex justify-around items-center content-center w-full h-[5vh] bg-[rgb(42,51,66)] hover:bg-[rgb(92,110,141)]">
                 <p className="text-white">Back to top</p>
             </div>
         </a>
@@ -48,11 +48,10 @@ export default function App() {
             <div className=" grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                 {/* <!-- Tailwind Elements section --> */}
                 <div className="flex-col">
-                    <div className="flex items-center justify-around content-center">
-                        <img className="w-[5vw] " src="/src/assets/images/logo.png" alt="" />
-                        <h6 className="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">FastCommerce</h6>
+                    <div className="flex flex-col items-center justify-around content-center py-6">
+                      <img className="w-[10vw] pb-6" src="/src/assets/images/logo2.png" alt="" />
+                      <p>Find your need products sitting Home as fast as possible</p>
                     </div>
-                    <p>Find your need products sitting Home as fast as possible</p>
             </div>
             {/* <!-- Products section --> */}
             <div className="">

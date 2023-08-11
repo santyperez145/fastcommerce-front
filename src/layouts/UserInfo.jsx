@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 export default function UserInfo() {
 
-    const user = useSelector((state) => state.auth.user);
+  let user = JSON.parse(localStorage.getItem("user"));
 
     let token = LS.get('token')
 
