@@ -7,11 +7,10 @@ import ProductDetail from "../pages/products/ProductDetail";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import CartPage from "../pages/CartPage";
-import Dashboard from "../pages/user/Dashboard";
+import UserDashboard from "../pages/user/UserDashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateCategory from "../pages/admin/CreateCategory";
 import ProductsPage from "../pages/admin/CreateProduct";
-import Orders from "../pages/user/Orders";
 import { ProtectedRoute, ProtectedSignIn } from "./private";
 
 // Create a custom Route component to pass the token as a parameter
@@ -58,8 +57,8 @@ const router = createBrowserRouter([
         element: <CartPage />
       },
       {
-        path: '/dashboard/user',
-        element: <Dashboard />
+        path: '/dashboard/user/:user_id',
+        element: <UserDashboard />
       },
       {
         path:'/products/:id',

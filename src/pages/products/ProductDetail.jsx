@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link as Anchor, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import productsActions from '../../redux/actions/products'
+import { addToCart } from '../../redux/actions/cart'
+import Swal from 'sweetalert2';
 
 let findProductById = (products, id) => {
   return products.find(product => product._id === id);
@@ -11,6 +13,7 @@ let findProductById = (products, id) => {
 let ProductDetails = () => {
   let dispatch = useDispatch();
   let { id } = useParams();
+
 
   let products = useSelector((store) => store.products.products);
   console.log(products);
@@ -56,6 +59,44 @@ let ProductDetails = () => {
       setUnitsSelected(unitsSelected - 1);
     }
   }
+
+  const handleAddToCart = () => {
+    if (unitsSelected > 0) {
+      const cartItems = [
+        {
+          product: id,
+          quantity: unitsSelected,
+        }
+      ];
+  
+      const dataToSend = {
+        user_id: '64cc0dd443c96bdaf31e5034', // Reemplaza esto con el ID de usuario correcto
+        items: cartItems,
+      };
+      
+      dispatch(addToCart(dataToSend))
+        .then(() => {
+          console.log('Products added to cart successfully');
+           // Mostrar una alerta de éxito
+        Swal.fire({
+        icon: 'success',
+        title: 'Product added',
+        text: 'The product has been added to your cart.',
+      });
+        })
+        .catch(error => {
+          console.error('Error adding products to cart:', error);
+         // Mostrar una alerta de error
+        Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while adding the product to your cart.',
+        }); 
+      });
+    }
+  };
+  
+  
 
   return (
     <div className="flex items-center justify-center min-h-[84vh] p-10">
@@ -142,7 +183,7 @@ let ProductDetails = () => {
                   </div>
                   <p className="mt-2">Max: <spin className="font-bold">{product?.stock}</spin> units</p>
                 </div>
-                <button className="w-[16vw] h-[5vh] rounded-3xl bg-[#ff5757] hover:bg-[#9c3535] mb-2 ">
+                <button className="w-[16vw] h-[5vh] rounded-3xl bg-[#ff5757] hover:bg-[#9c3535] mb-2 " onClick={handleAddToCart}>
                   Add to Cart
                 </button>
                 <button className="w-[16vw] h-[5vh] rounded-3xl bg-green-400 hover:bg-green-500 mt-2">
