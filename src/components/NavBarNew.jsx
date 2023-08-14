@@ -75,7 +75,7 @@ const NavBar = () => {
         {/* User Avatar and Menu */}
         {isLoggedIn() && (
           <div className="relative">
-            <img src={user?.photo} alt="User Avatar" className="w-[10vw] md:w-[4vw] rounded-full cursor-pointer" onClick={handleUserMenuToggle} />
+            <img src={user?.photo} alt="User Avatar" className="w-[10vw] md:w-[3vw] hover:border-2 hover:border-white rounded-full cursor-pointer" onClick={handleUserMenuToggle} />
             {userMenuOpen && (
               <div className="absolute w-[25vw] z-20 content-start top-10 right-0 bg-white border border-gray-200 rounded-lg shadow-md p-2">
                 <p className="text-start block px-6 py-2 text-gray-800 text-bold">{user?.email}</p>
@@ -85,7 +85,7 @@ const NavBar = () => {
                 <Anchor to="/dashboard/admin" className="text-start block px-6 py-2 text-gray-800 hover:bg-[#ff5757] hover:text-white">
                   Admin Panel
                 </Anchor>
-                <Anchor to="/dashboard/user" className="text-start block px-6 py-2 text-gray-800 hover:bg-[#ff5757] hover:text-white">
+                <Anchor to={`/dashboard/user/:${user._id}`} className="text-start block px-6 py-2 text-gray-800 hover:bg-[#ff5757] hover:text-white">
                   User Panel
                 </Anchor>
                 <Anchor onClick={signout} className="text-start block px-6 py-2 text-gray-800 hover:bg-[#ff5757] hover:text-white">

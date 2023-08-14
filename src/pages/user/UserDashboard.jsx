@@ -5,7 +5,7 @@ import UserOrders from '../../components/UserOrders'
 
 const Dashboard = ()=> {
     return (
-        <div className="flex flex-col items-center h-screen bg-[url('/fondo-admin.jpg')] bg-cover">
+        <div className="flex flex-col justify-around items-center h-screen bg-gray-200">
             <UserInfo />
             <UserMenu />
             <UserOrders />

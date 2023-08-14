@@ -125,12 +125,12 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-[url('/fondo-admin.jpg')] bg-cover py-9">
+    <div className="flex flex-col justify-start gap-[20px] items-center  bg-gray-200 text-black">
       <UserInfo />
       <AdminMenu />
       <h1 className='flex justify-center items-center text-center text-black font-bold text-2xl py-3'>Categories</h1>
-      <div className="lg:text-lg bg-gray-800 flex flex-col items-center text-white p-6 min-h-[500px] w-[40%] rounded-md shadow-lg">
-        <button onClick={openNewCategoryModal} className='bg-white w-[150px] h-[50px] text-black'>New Category</button>
+      <div className="lg:text-lg bg-white flex flex-col items-center p-6 min-h-[500px] w-[80vw] rounded-md shadow-lg">
+        <button onClick={openNewCategoryModal} className='bg-white hover:text-orange-600 w-[150px] h-[50px] text-black'>New Category</button>
         <div className='flex flex-col justify-center items-center'>
         <table>
             <thead>
@@ -141,7 +141,7 @@ const CategoriesPage = () => {
                 <th className='py-[20px] px-[50px]'>Delete</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='text-[25px]'>
 
           {categories.map((category) => (
             <tr>
@@ -149,8 +149,8 @@ const CategoriesPage = () => {
               {category.name}</td>
               <td className='text-center py-[20px] px-[50px]' key={category.cover_photo}><img className='h-[100px] w-[100px] rounded-full' src={category.cover_photo} alt={category.cover_photo} />
               </td>
-              <td className='text-center py-[20px] px-[50px]'><button onClick={() => openEditModal(category)}>Edit</button></td>
-              <td className='text-center py-[20px] px-[50px]'><button onClick={() => handleDeleteCategory(category._id)}>Delete</button></td>
+              <td className='text-center py-[20px] px-[50px]'><button onClick={() => openEditModal(category)} className='text-green-600'>Edit</button></td>
+              <td className='text-center py-[20px] px-[50px]'><button onClick={() => handleDeleteCategory(category._id)} className='text-orange-600'>Delete</button></td>
             
             </tr>
           ))}
