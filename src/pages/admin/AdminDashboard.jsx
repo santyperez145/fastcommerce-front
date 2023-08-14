@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     let token = LS.get('token')
 
     return (
-        <div className="flex flex-col gap-[20px] items-center h-screen bg-[url('/fondo-admin.jpg')] bg-cover">
+        <div className="flex flex-col justify-start gap-[20px] items-center h-screen bg-gray-200">
             <UserInfo />
             <AdminMenu />
         </div>

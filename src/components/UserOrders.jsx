@@ -54,7 +54,7 @@ export default function UserOrders() {
   };
 
   return (
-    <div className="lg:text-lg bg-gray-800 flex flex-col items-center text-white p-6 min-h-[500px] w-[40%] rounded-md shadow-lg">
+    <div className="lg:text-lg bg-white text-black flex flex-col items-center  p-6 min-h-[500px] w-[80vw] rounded-md shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Your Orders</h1>
       <table className="w-full text-center">
         <thead>

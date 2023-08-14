@@ -10,7 +10,7 @@ export default function UserInfo() {
 
 
   return (
-    <div className="bg-gray-800 text-white p-6 w-[40%] rounded-md shadow-lg">
+    <div className="bg-white text-black p-6 w-[80vw] rounded-md shadow-lg">
         <h1 className="text-xl text-center font-semibold">Admin Panel</h1>
         <div className="mt-4 text-center">
             <div className="flex items-center justify-center">

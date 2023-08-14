@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, apiUrl, endpoints } from '../../utils/api.js'; // Importa los endpoints de tu archivo api.js
 import { LS } from '../../utils/localStorageUtils.js';
 
+let user = JSON.parse(localStorage.getItem("user"));
 
 export const addToCart = createAsyncThunk('cart/addToCart', async ({ user_id, items }) => {
   try {
@@ -31,7 +32,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async ({ user_id, it
   export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productId) => {
     try {
       let token = LS.get('token');
-      const response = await api.put(apiUrl + endpoints.removeCart.replace(':productId', productId), { user_id: '64cc0dd443c96bdaf31e5034', productId }, {
+      const response = await api.put(apiUrl + endpoints.removeCart.replace(':product_id', productId), { user_id: user._id, productId }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
