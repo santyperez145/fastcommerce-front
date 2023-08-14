@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import { api } from '../../utils/api';
 
 const MailVerification = () => {
     const navigate = useNavigate()
@@ -10,7 +10,7 @@ const MailVerification = () => {
 
     const changeVerified = async () => {
         try {
-            await axios.get(`http://localhost:8080/api/auth/verify/${verify_code}`);
+            await api.get(`https://fastcommerce-back-production.up.railway.app/api/auth/verify/${verify_code}`);
             setVerificationStatus(true)
             Swal.fire({
                 icon: "success",
