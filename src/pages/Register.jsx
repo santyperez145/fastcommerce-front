@@ -4,7 +4,6 @@ import { Link as Anchor , useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import GoogleLogin from "react-google-login";
 import { gapi } from 'gapi-script'
-import axios from "axios";
 
 export default function Register() {
 
@@ -81,7 +80,7 @@ export default function Register() {
       photo: imageUrl,
       password: googleId,
     }
-    axios.post("http://localhost:8080/api/auth/register", data)
+    api.post("https://fastcommerce-back-production.up.railway.app/api/auth/register", data)
       .then(res => {
         Swal.fire({
           icon: "success",
