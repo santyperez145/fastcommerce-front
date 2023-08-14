@@ -5,14 +5,21 @@ import { setUser, setPhoto } from '../redux/actions/auth.js';
 import { api, apiUrl, endpoints } from '../utils/api';
 import Swal from 'sweetalert2';
 import { LS } from '../utils/localStorageUtils.js';
+import axios from 'axios';
+import productsActions from '../redux/actions/products.js';
 
 const NavBar = () => {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const dispatch = useDispatch();
+  let [userMenuOpen, setUserMenuOpen] = useState(false);
+  let [search, setSearch] = useState('');
+  let [searchedProducts, setSearchedProducts] = useState([]);
+  let dispatch = useDispatch();
   let navigate = useNavigate()
   let token = JSON.parse(localStorage.getItem("token"));
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
+  //console.log(user)
+
+  let products = useSelector((store) => store.products.products)
+  console.log(products)
 
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
@@ -28,26 +35,12 @@ const NavBar = () => {
     localStorage.clear()
     navigate("/")
   };
-/*
-  useEffect(() => {
-    if (!user) fetchUserData();
-  }, []);
-  const fetchUserData = async () => {
-    try {
-      const response = await api.get(apiUrl + endpoints.login, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const { user, photo } = response.data.response;
-      
-      dispatch(setUser(user));
-      dispatch(setPhoto(photo));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  */
 
-
+  let getSearchedProducts = async () => {
+    dispatch(productsActions.searched_products({search}))
+    navigate('/products/search-results')
+  }
+  
   return (
     <>
       <nav className="flex bg-[rgb(42,51,66)] items-center justify-around h-[9vh]">
@@ -57,13 +50,17 @@ const NavBar = () => {
         </a>
 
         {/* Search Bar */}
-        <div className="flex w-[60vw] px-6">
-          <input type="text" placeholder="Search your product" className="w-[60vw] px-6 rounded-lg border  focus:outline-none focus:border-black" />
+        <div className="flex relative w-[60vw]">
+          <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" placeholder="Search your product" className="w-full px-9 rounded-lg border border-[#ff5757]" />
+            <button onClick={getSearchedProducts} className="absolute top-0 right-0 h-full p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 text-[#ff5757]" >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </button>
         </div>
 
         {/* Links */}
         <div className="flex items-center pe-8">
-          
           {isLoggedIn() ? null :<a href="/login" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
             Login
           </a>}
@@ -97,39 +94,39 @@ const NavBar = () => {
         )}
       </nav>
       <div className="flex h-[6vh] ps-6 justify-start items-center bg-[#ff5757]">
-        <a href="#" className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/all" >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           All
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/carpentry" >
           Carpentry
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/construction" >
           Construction
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/electricity" >
           Electricity
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/flooring" >
           Flooring
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/furniture" >
           Furniture
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/hardware" >
           Hardware
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/kitchen&bath" >
           Kitchen&Bath
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/painting" >
           Painting
-        </a>
-        <a href="#" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+        </Anchor>
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/tools" >
           Tools
-        </a>
+        </Anchor>
       </div>
     </>
   );

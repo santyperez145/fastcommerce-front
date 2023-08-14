@@ -2,13 +2,18 @@ import React from 'react';
 import {Link as Anchor} from "react-router-dom"
 
 export default function App() {
+  let scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Para que el scroll sea suave
+    });
+  }
+  
   return (
     <footer className="bg-neutral-100 text-center text-neutral-600 dark:bg-neutral-600 dark:text-neutral-200 lg:text-left">
-        <a href="/">
-            <div className="flex justify-around items-center content-center w-full h-[5vh] bg-[rgb(42,51,66)] hover:bg-[rgb(92,110,141)]">
-                <p className="text-white">Back to top</p>
-            </div>
-        </a>
+        <button onClick={scrollToTop} className="flex justify-around items-center content-center w-full h-[5vh] text-white bg-[rgb(42,51,66)] hover:bg-[rgb(92,110,141)]">
+          Back to top
+        </button>
         <div className="flex items-center justify-center border-b-2 border-t-2 border-neutral-200 p-6 dark:border-neutral-500 lg:justify-between">
         <div className="mr-12 hidden lg:block">
           <span>Get connected with us on social networks:</span>
