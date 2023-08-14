@@ -13,7 +13,7 @@ let findProductById = (products, id) => {
 let ProductDetails = () => {
   let dispatch = useDispatch();
   let { id } = useParams();
-
+  let user = JSON.parse(localStorage.getItem("user"));
 
   let products = useSelector((store) => store.products.products);
   console.log(products);
@@ -70,7 +70,7 @@ let ProductDetails = () => {
       ];
   
       const dataToSend = {
-        user_id: '64cc0dd443c96bdaf31e5034', // Reemplaza esto con el ID de usuario correcto
+        user_id: user?._id, // Reemplaza esto con el ID de usuario correcto
         items: cartItems,
       };
       
