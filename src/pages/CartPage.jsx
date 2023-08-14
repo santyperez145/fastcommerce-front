@@ -4,6 +4,8 @@ import { updateCartItem, removeFromCart, fetchCartItems } from '../redux/actions
 import { api, apiUrl, endpoints } from '../utils/api.js';
 import { LS } from '../utils/localStorageUtils.js';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ const CartPage = () => {
   const cartItems = useSelector(state => state?.cart?.items);
   let user = JSON.parse(localStorage.getItem("user"));
   let token = LS.get('token');
+  let navigate = useNavigate()
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
@@ -25,13 +28,7 @@ const CartPage = () => {
     }
   };*/
 
-  const handleRemoveItem = async (productId) => {
-    try {
-      await dispatch(removeFromCart(productId));
-    } catch (error) {
-      console.error('Error al eliminar el producto:', error);
-    }
-  };
+  // Llamada en el componente CartPage.js
 
   const handleCheckout = async () => {
     try {
@@ -56,11 +53,36 @@ const CartPage = () => {
         setLoading(false);
       }
     };
-
-    if (user && token) {
+  
+    if (user && token && loading) {
       fetchItems();
     }
-  }, [user, token, dispatch]);
+  }, [user, token, loading, dispatch]);
+
+  const handleRemoveItem = async (productId) => {
+    try {
+      await dispatch(removeFromCart(productId));
+      fetchItems(); // Llama a la función para actualizar la vista
+
+       // Mostrar una alerta de éxito
+       Swal.fire({
+        icon: 'success',
+        title: 'Product removed',
+        text: 'The product has been removed from your cart.',
+        });
+        navigate("/cart-page")
+
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while removing the product from your cart.',
+      });
+
+      navigate("/cart-page")
+    }
+  };
 
   if (loading) {
     return <div className='flex justify-center items-center'>Cargando...</div>;
@@ -100,13 +122,13 @@ const CartPage = () => {
                       <p className="block text-[] font-medium leading-6 text-black">Qty <span>{item.quantity}</span></p>
                     </div>
                     <div className="flex">
-                      <button
-                        type="button"
-                        className="font-medium text-purple-600 hover:text-purple-500"
-                        onClick={() => handleRemoveItem(item?.product._id)}
-                      >
-                        Remove
-                      </button>
+                    <button
+                  type="button"
+                  className="font-medium text-[#ff5757] hover:text-[#ff5757]"
+                  onClick={() => handleRemoveItem(item?.product._id)}
+                  >
+                  Remove
+                  </button>
                     </div>
                   </div>
                 </div>
@@ -122,7 +144,7 @@ const CartPage = () => {
           <p className="mt-0.5 text-gray-500 flex items-center justify-center text-[20px]">Taxes calculated at checkout.</p>
           <div className="mt-6 flex items-center justify-center">
             <button
-              className="flex items-center justify-center rounded-md border border-transparent bg-purple-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-purple-700"
+              className="flex items-center justify-center rounded-md border border-transparent bg-[#ff5757] px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-[#ff5757]"
               onClick={handleCheckout}
             >
               Checkout
@@ -134,7 +156,7 @@ const CartPage = () => {
               <Link to="/">
                 <button
                   type="button"
-                  className="font-medium text-[20px] text-purple-600 hover:text-purple-500"
+                  className="font-medium text-[20px] text-[#ff5757] hover:text-[#ff5757]"
                 >
                    Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>

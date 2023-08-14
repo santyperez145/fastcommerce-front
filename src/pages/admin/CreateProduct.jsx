@@ -41,7 +41,7 @@ const ProductsPage = () => {
   const [editProduct, setEditProduct] = useState(null);
   const [editedProduct, setEditedProduct] = useState({
     name: '',
-    description: {},
+    description: [],
     cover_photo: [],
     category_id: '',
     price: 0,
@@ -52,7 +52,7 @@ const ProductsPage = () => {
 
   const [newProduct, setNewProduct] = useState({
     name: '',
-    description: {},
+    description: [],
     cover_photo: [],
     category_id: '',
     price: 0,
@@ -95,7 +95,7 @@ const ProductsPage = () => {
     setEditProduct(null);
     setEditedProduct({
       name: '',
-      description: {},
+      description: [],
       cover_photo: [],
       category_id: '',
       price: 0,
@@ -113,7 +113,7 @@ const ProductsPage = () => {
     setIsNewProductModalOpen(false);
     setNewProduct({
       name: '',
-      description: {},
+      description: [],
       cover_photo: [],
       category_id: '',
       price: 0,
@@ -125,7 +125,7 @@ const ProductsPage = () => {
 
   const handleEditProduct = async () => {
     try {
-      await api.put(apiUrl + `products/edit/${editProduct._id}`, editedProduct);
+      await api.put(apiUrl + `products/update/${editProduct._id}`, editedProduct);
       fetchProducts();
       closeEditModal();
     } catch (error) {
@@ -153,31 +153,33 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-[url('/fondo-admin.jpg')] bg-cover py-9">
+    <div className="flex flex-col items-center bg-gray-200 text-black py-9">
       <UserInfo />
       <AdminMenu />
       <h1 className='flex justify-center items-center text-center text-black font-bold text-2xl py-3'>Products</h1>
-      <div className="lg:text-lg bg-gray-800 flex flex-col items-center text-white p-6 min-h-[500px] w-[80%] rounded-md shadow-lg">
-        <button onClick={openNewProductModal} className='bg-white w-[150px] h-[50px] text-black'>New Product</button>
-        <div className='flex flex-col justify-center items-center'>
-          <table>
+      <div className="lg:text-lg bg-white flex flex-col items-center text-white p-6 min-h-[500px] w-[80vw] rounded-md shadow-lg">
+        <button onClick={openNewProductModal} className='bg-white hover:text-orange-600 w-[150px] h-[50px] text-black'>New Product</button>
+        <div className='flex flex-col justify-center items-center text-black'>
+          <table className=''>
             <thead>
               <tr>
                 <th className='py-[20px] px-[50px]'>Name</th>
                 <th className='py-[20px] px-[50px]'>Cover Photo</th>
                 <th className='py-[20px] px-[50px]'>Price</th>
+                <th className='py-[20px] px-[50px]'>Stock</th>
                 <th className='py-[20px] px-[50px]'>Edit</th>
                 <th className='py-[20px] px-[50px]'>Delete</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='text-[25px]'>
               {products.map((product) => (
                 <tr>
                   <td className='text-center py-[20px] px-[50px]' key={product._id}>{product.name}</td>
                   <td className='text-center py-[20px] px-[50px]' key={product.cover_photo}><img className='h-[100px] w-[100px] rounded-full' src={product.cover_photo[0]} alt={product.cover_photo} /></td>
                   <td className='text-center py-[20px] px-[50px]' key={product.price}>${product.price}</td>
-                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => openEditModal(product)}>Edit</button></td>
-                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => handleDeleteProduct(product._id)}>Delete</button></td>
+                  <td className='text-center py-[20px] px-[50px]' key={product.stock}>{product.stock}</td>
+                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => openEditModal(product)} className='text-green-600'>Edit</button></td>
+                  <td className='text-center py-[20px] px-[50px]'><button onClick={() => handleDeleteProduct(product._id)} className='text-orange-600'>Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -199,18 +201,63 @@ const ProductsPage = () => {
               className='min-w-[15rem] h-[2.5rem]'
             />
             <textarea
-            type="text"
-            value={editedProduct.description.text}
-            placeholder='Description'
-            onChange={(e) => setEditedProduct({ ...editedProduct, description: { ...editedProduct.description, text: e.target.value } })}
-            className='min-w-[15rem] resize-none'
+              placeholder="Descripción Principal"
+              value={editedProduct.description[0]?.resum || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...editedProduct,
+                  description: [
+                    { ...editedProduct.description[0], resum: e.target.value },
+                    ...(editedProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] resize-none'
             />
+
             <input
-            type="text"
-            value={editedProduct.description.material1}
-            placeholder='Material 1'
-            onChange={(e) => setEditedProduct({ ...editedProduct, description: { ...editedProduct.description, material1: e.target.value } })}
-            className='min-w-[15rem] h-[2.5rem]'
+              placeholder="Material"
+              value={editedProduct.description[0]?.material || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...editedProduct,
+                  description: [
+                    { ...editedProduct.description[0], material: e.target.value },
+                    ...(editedProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] h-[2.5rem]'
+            />
+
+            <input
+              placeholder="Condición"
+              value={editedProduct.description[0]?.condition || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...editedProduct,
+                  description: [
+                    { ...editedProduct.description[0], condition: e.target.value },
+                    ...(editedProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] h-[2.5rem]'
+            />
+
+            <input
+              placeholder="Color"
+              value={editedProduct.description[0]?.color || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...editedProduct,
+                  description: [
+                    { ...editedProduct.description[0], color: e.target.value },
+                    ...(editedProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] h-[2.5rem]'
             />
             <input
               type="text"
@@ -279,15 +326,62 @@ const ProductsPage = () => {
               className='min-w-[15rem] h-[2.5rem]'
             />
             <textarea
-              placeholder="Main Description"
-              value={newProduct.description.text}
-              onChange={(e) => setNewProduct({ ...newProduct, description: { ...newProduct.description, text: e.target.value } })}
+              placeholder="Descripción Principal"
+              value={newProduct.description[0]?.resum || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  description: [
+                    { ...newProduct.description[0], resum: e.target.value },
+                    ...(newProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
               className='min-w-[15rem] resize-none'
             />
+
             <input
-              placeholder="Material 1"
-              value={newProduct.description.material1}
-              onChange={(e) => setNewProduct({ ...newProduct, description: { ...newProduct.description, material1: e.target.value } })}
+              placeholder="Material"
+              value={newProduct.description[0]?.material || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  description: [
+                    { ...newProduct.description[0], material: e.target.value },
+                    ...(newProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] h-[2.5rem]'
+            />
+
+            <input
+              placeholder="Condición"
+              value={newProduct.description[0]?.condition || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  description: [
+                    { ...newProduct.description[0], condition: e.target.value },
+                    ...(newProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
+              className='min-w-[15rem] h-[2.5rem]'
+            />
+
+            <input
+              placeholder="Color"
+              value={newProduct.description[0]?.color || ''}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  description: [
+                    { ...newProduct.description[0], color: e.target.value },
+                    ...(newProduct.description.slice(1)) // Preserve other items in the array
+                  ]
+                })
+              }
               className='min-w-[15rem] h-[2.5rem]'
             />
             <input

@@ -12,6 +12,7 @@ export const endpoints = {
     addToCart: "cart/add-to-cart",
     updateCart: "cart/update-cart-item",
     removeCart: "cart/remove-cart-item/:product_id",
+    getUserOrders: "payment/get-user-orders/:user_id"
 
 };
 
