@@ -10,6 +10,7 @@ import UserDashboard from "../pages/user/UserDashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateCategory from "../pages/admin/CreateCategory";
 import ProductsPage from "../pages/admin/CreateProduct";
+import EmailVerification from "../pages/user/EmailVerification";
 import { ProtectedRoute, ProtectedSignIn } from "./private";
 import { ProductDetail, AllProducts, Carpentry, Construction, Electricity, FlooringProducts, Furniture, Hardware, KitchenAndBath, Painting, Tools, ProductsSearched } from '.'
 
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: '/products/search-results',
         element: <ProductsSearched/>,
+      },
+      {
+        path: '/mail-verification/:verify_code',
+        element: <EmailVerification />
       },
     {
       path: '/dashboard/admin/categories',
