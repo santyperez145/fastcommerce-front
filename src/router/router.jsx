@@ -3,7 +3,6 @@ import Main from "../layouts/Main";
 import Index from "../pages/Index";
 import SignIn from "../pages/Signin";
 import Register from "../pages/Register";
-import ProductDetail from "../pages/products/ProductDetail";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import CartPage from "../pages/CartPage";
@@ -12,6 +11,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateCategory from "../pages/admin/CreateCategory";
 import ProductsPage from "../pages/admin/CreateProduct";
 import { ProtectedRoute, ProtectedSignIn } from "./private";
+import { ProductDetail, AllProducts, Carpentry, Construction, Electricity, FlooringProducts, Furniture, Hardware, KitchenAndBath, Painting, Tools, ProductsSearched } from '.'
 
 // Create a custom Route component to pass the token as a parameter
 function ResetPasswordRoute() {
@@ -67,7 +67,51 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/admin',
         element: <AdminDashboard />,
-    },
+      },
+      {
+        path: '/products/all',
+        element: <AllProducts />,
+      },
+      {
+        path: '/products/carpentry',
+        element: <Carpentry />,
+      },
+      {
+        path: '/products/construction',
+        element: <Construction />,
+      },
+      {
+        path: '/products/electricity',
+        element: <Electricity />,
+      },
+      {
+        path: '/products/flooring',
+        element: <FlooringProducts />,
+      },
+      {
+        path: '/products/furniture',
+        element: <Furniture />,
+      },
+      {
+        path: '/products/hardware',
+        element: <Hardware />,
+      },
+      {
+        path: '/products/kitchen&bath',
+        element: <KitchenAndBath />,
+      },
+      {
+        path: '/products/painting',
+        element: <Painting />,
+      },
+      {
+        path: '/products/tools',
+        element: <Tools />,
+      },
+      {
+        path: '/products/search-results',
+        element: <ProductsSearched/>,
+      },
     {
       path: '/dashboard/admin/categories',
       element: <CreateCategory />
