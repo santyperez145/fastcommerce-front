@@ -29,7 +29,7 @@ export default function Index() {
   function filterByCategoryId(products, categoryId) {
     const filteredProducts = [];
     for (const product of products) {
-      if (product.category_id === categoryId) {
+      if (product?.category_id === categoryId) {
         filteredProducts.push(product);
       }
     }
@@ -77,31 +77,31 @@ export default function Index() {
     <div>
       <Carousel images={images}/>
       {/*<Card className="self-center "/>*/}
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Carpentry Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Carpentry Products:</p>
       <ProductByCategory productsList={carpentryProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Construction Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Construction Products:</p>
       <ProductByCategory productsList={constructionProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Electrical Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Electrical Products:</p>
       <ProductByCategory productsList={electricityProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Flooring Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Flooring Products:</p>
       <ProductByCategory productsList={flooringProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Hardware Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Hardware Products:</p>
       <ProductByCategory productsList={hardwareProducts}/>
 
-      {/*<p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Home Decoration Products:</p>
+      {/*<p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Home Decoration Products:</p>
       <ProductByCategory productsList={homeDecorationProducts}/>*/}
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Kitchen & Bathrrom Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Kitchen & Bathrrom Products:</p>
       <ProductByCategory productsList={kitchenProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Painting Products:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Painting Products:</p>
       <ProductByCategory productsList={paintingProducts}/>
 
-      <p className="text-black ps-[5vw] mt-[3vh] py-6 text-2xl font-mono font-semibold">Tools:</p>
+      <p className="text-black ps-[5vw] mt-[3vh] pt-9 text-2xl font-mono font-semibold">Tools:</p>
       <ProductByCategory productsList={toolsProducts}/>
       
     </div>
