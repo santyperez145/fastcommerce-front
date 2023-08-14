@@ -5,7 +5,6 @@ import { setUser, setPhoto } from '../redux/actions/auth.js';
 import { api, apiUrl, endpoints } from '../utils/api';
 import Swal from 'sweetalert2';
 import { LS } from '../utils/localStorageUtils.js';
-import axios from 'axios';
 import productsActions from '../redux/actions/products.js';
 
 const NavBar = () => {

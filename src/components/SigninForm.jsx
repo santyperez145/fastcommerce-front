@@ -7,7 +7,6 @@ import { Link as Anchor, useNavigate } from 'react-router-dom';
 import { LS } from '../utils/localStorageUtils.js';
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
-import axios from 'axios';
 
 function alertSoon() {
   Swal.fire({
@@ -88,7 +87,7 @@ export default function SigninForm() {
     }
     console.log(data)
     
-    axios.post("http://localhost:8080/api/auth/login", data)
+    api.post("https://fastcommerce-back-production.up.railway.app/api/auth/login", data)
       .then(res => {
         console.log(res)
         localStorage.setItem('token', JSON.stringify(res.data.response.token));
