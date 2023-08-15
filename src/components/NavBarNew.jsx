@@ -44,9 +44,9 @@ const NavBar = () => {
     <>
       <nav className="flex bg-[rgb(42,51,66)] items-center justify-around h-[9vh]">
         {/* Logo */}
-        <a href="/" className="flex items-center justify-center">
+        <Anchor to="/" className="flex items-center justify-center">
           <img src="/src/assets/images/logo1.png" alt="Ecommerce Logo" className="h-[7vh]" />
-        </a>
+        </Anchor>
 
         {/* Search Bar */}
         <div className="flex relative w-[60vw]">
@@ -60,12 +60,12 @@ const NavBar = () => {
 
         {/* Links */}
         <div className="flex items-center pe-8">
-          {isLoggedIn() ? null :<a href="/login" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+          {isLoggedIn() ? null :<Anchor to="/login" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
             Login
-          </a>}
-          {isLoggedIn() ? null :<a href="/register" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
+          </Anchor>}
+          {isLoggedIn() ? null :<Anchor to="/register" className="text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border">
             Register
-          </a>}
+          </Anchor>}
         </div>
 
         {/* User Avatar and Menu */}

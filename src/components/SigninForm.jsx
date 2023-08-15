@@ -159,9 +159,9 @@ export default function SigninForm() {
             type="submit"
             className="flex w-[70vw] md:w-[30vw] h-12 flex-col items-center justify-center shrink-0 bg-[#ff5757] rounded-[10px]"
           >
-            <a className="text-[#FAFCFC] text-center text-[21px] not-italic font-bold leading-[normal] tracking-[0.7px]">
+            <Anchor className="text-[#FAFCFC] text-center text-[21px] not-italic font-bold leading-[normal] tracking-[0.7px]">
               Sign In
-            </a>
+            </Anchor>
           </button>
           <GoogleLogin className="w-[70vw] md:w-[30vw] h-12 shrink-0 border rounded-[10px] border-solid border-[#1F1F1F] bg-blue-500 flex justify-center items-center"
                 clientId={clientID}

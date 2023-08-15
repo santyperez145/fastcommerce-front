@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { api, apiUrl, endpoints } from '../utils/api';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Link as Anchor, useNavigate } from 'react-router-dom';
 
 export default function ResetPassword() {
   const inputNewPassword = useRef('');
@@ -68,9 +69,9 @@ export default function ResetPassword() {
             type="submit"
             className="flex w-[70vw] md:w-[30vw] h-12 flex-col items-center justify-center shrink-0 bg-purple-600 rounded-[10px]"
           >
-            <a className="text-[#FAFCFC] text-center text-sm not-italic font-bold leading-[normal] tracking-[0.7px]">
+            <Anchor className="text-[#FAFCFC] text-center text-sm not-italic font-bold leading-[normal] tracking-[0.7px]">
               Reset Password
-            </a>
+            </Anchor>
           </button>
           {/* You can add a link to redirect back to login */}
         </div>

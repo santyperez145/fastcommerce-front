@@ -67,9 +67,9 @@ export default function ForgotPassword() {
             type="submit"
             className="flex w-[70vw] md:w-[30vw] h-12 flex-col items-center justify-center shrink-0 bg-purple-600 rounded-[10px]"
           >
-            <a className="text-[#FAFCFC] text-center text-sm not-italic font-bold leading-[normal] tracking-[0.7px]">
+            <Anchor className="text-[#FAFCFC] text-center text-sm not-italic font-bold leading-[normal] tracking-[0.7px]">
               Send Email
-            </a>
+            </Anchor>
           </button>
           <p className="text-[#1F1F1F] text-[20px] not-italic font-medium leading-[normal] tracking-[0.7px]">
             Send me back to <Anchor to={'/login'} className="text-purple-600">Login</Anchor>
