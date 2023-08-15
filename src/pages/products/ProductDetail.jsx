@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link as Anchor, useParams } from "react-router-dom";
+import { Link as Anchor, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import productsActions from '../../redux/actions/products'
 import { addToCart } from '../../redux/actions/cart'
 import Swal from 'sweetalert2';
+import ModalComment from '../../components/ModalComment';
 
 let findProductById = (products, id) => {
   return products.find(product => product._id === id);
 }
 
 let ProductDetails = () => {
+  let navigate = useNavigate()
   let dispatch = useDispatch();
   let { id } = useParams();
   let user = JSON.parse(localStorage.getItem("user"));
@@ -95,6 +97,18 @@ let ProductDetails = () => {
       });
     }
   };
+
+  let [isModalOpen, setModalOpen] = useState(false)
+    let [selectedProductId, setSelectedProductId] = useState(null)
+  
+    let handleOpenModal = (productId) => {
+      setModalOpen(true);
+      setSelectedProductId(productId);
+    }
+  
+    let handleCloseModal = () => {
+      setModalOpen(false);
+    }
   
   
 
@@ -151,12 +165,13 @@ let ProductDetails = () => {
                 <p className="  ps-2">Home Delivery </p>
               </div>
               <div className="flex w-[16vw] justify-start items-center">
-                <button>
+                <button onClick={() => handleOpenModal(product?._id)}>
                   <svg className="w-[2vw]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                   </svg>
                 </button>
                 <p className="  ps-2">Write a Review </p>
+                <ModalComment isOpen={isModalOpen} onClose={handleCloseModal} productId={selectedProductId} />
               </div>
               <div className="flex w-[16vw] justify-start items-center">
                 <button>
@@ -186,9 +201,11 @@ let ProductDetails = () => {
                 <button className="w-[16vw] h-[5vh] rounded-3xl bg-[#ff5757] hover:bg-[#9c3535] mb-2 " onClick={handleAddToCart}>
                   Add to Cart
                 </button>
-                <button className="w-[16vw] h-[5vh] rounded-3xl bg-green-400 hover:bg-green-500 mt-2">
-                  Buy now
-                </button>
+                <Anchor to="/cart-page">
+                  <button className="w-[16vw] h-[5vh] rounded-3xl bg-green-400 hover:bg-green-500 mt-2">
+                    Buy now
+                  </button>
+                </Anchor>
                 <div className="flex mt-2 pt-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />

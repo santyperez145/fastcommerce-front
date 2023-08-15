@@ -117,7 +117,7 @@ export default function Furniture() {
     
     <div className="flex items-center justify-center">
       <div className="flex flex-col mt-6 self-start w-[22.5vw] min-h-[36vh] ">
-        <p className="font-bold justify-start text-2xl text-[rgb(42,51,66)] ">All Products</p>
+        <p className="font-bold justify-start text-2xl text-[rgb(42,51,66)] ">Furniture Products</p>
         
         <div className="my-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
