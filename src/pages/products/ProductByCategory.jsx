@@ -85,7 +85,7 @@ const nextSlide = () => {
       <div className="flex justify-center items-center">
           <div className="flex justify-between items-center w-[90vw] h-[43vh] overflow-hidden z-10">
               {productsList.slice(currentIndex, currentIndex + visibleProducts).map((product, index) => (
-                <div key={index} className={`flex flex-col content-between justify-between bg-white w-[19vw] h-[36vh] rounded-2xl shadow-2xl hover:scale-110 transition-opacity duration-1000`}>
+                <div key={index} className={`flex flex-col content-between justify-between bg-white w-[19vw] h-[36vh] rounded-2xl hover:scale-110 transition-opacity duration-1000`}>
                       <Anchor to={`/products/${product._id}`}>
                           <div className="flex items-center justify-center">
                               <img className="w-[13vw] border-b object-contain" src={product?.cover_photo[0]} alt="logo" />

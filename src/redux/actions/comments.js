@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios";
+import { api } from '../../utils/api.js';
 import Swal from "sweetalert2";
 
 let headers = ()=> {
@@ -13,7 +13,7 @@ const datos_comments = createAsyncThunk(
         console.log(productId)
         console.log(page)
         try {
-            let { data } = await axios.get(`http://localhost:8080/api/comments?product_id=${productId}&page=${page}`)
+            let { data } = await api.get(`https://fastcommerce-back-production.up.railway.app/api/comments?product_id=${productId}&page=${page}`)
             console.log(data)
             console.log(data.comments, data.totalPages, data.prev, data.next)
             return data.comments
@@ -27,7 +27,7 @@ const datos_comments = createAsyncThunk(
 const post_comment = createAsyncThunk(
     'post_comment', async({ product_id: productId, user_id: userId, comment: newComment }) => {
         try {
-            let post = await axios.post(`http://localhost:8080/api/comments/`, { product_id: productId, user_id: userId, comment: newComment }, headers())
+            let post = await api.post(`https://fastcommerce-back-production.up.railway.app/api/comments/`, { product_id: productId, user_id: userId, comment: newComment }, headers())
             Swal.fire({
                 icon: 'success',
                 title: 'Comment posted!',
@@ -47,7 +47,7 @@ const post_comment = createAsyncThunk(
 const edit_comment = createAsyncThunk(
     'edit_comment', async({commentId, comment: editedComment}) => {
         try {
-            await axios.put(`http://localhost:8080/api/comments/${commentId}`, {comment: editedComment }, headers());
+            await api.put(`https://fastcommerce-back-production.up.railway.app/api/comments/${commentId}`, {comment: editedComment }, headers());
             Swal.fire({
                 icon: 'success',
                 title: 'Comment changed successfully!',
@@ -66,7 +66,7 @@ const edit_comment = createAsyncThunk(
 const eliminate_comment = createAsyncThunk(
     'eliminate_comment', async({commentId}) => {
         try {
-            await axios.delete(`http://localhost:8080/api/comments/${commentId}`, headers());
+            await api.delete(`https://fastcommerce-back-production.up.railway.app/api/comments/${commentId}`, headers());
             Swal.fire({
                 icon: 'success',
                 title: 'Comment deleted successfully!',

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { api, apiUrl, endpoints } from '../utils/api';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 import { Link as Anchor, useNavigate } from 'react-router-dom';
 
 export default function ResetPassword() {
