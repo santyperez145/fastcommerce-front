@@ -3,15 +3,17 @@ import { useSelector } from 'react-redux';
 import { Link as Anchor } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import productsActions from '../../redux/actions/products'
+import { useParams } from "react-router-dom";
 
 export default function Carpentry() {
 
   let dispatch = useDispatch();
+  const { categoryId } = useParams();
   let [selectedBrand, setSelectedBrand] = useState('');
   let [selectedPriceRange, setSelectedPriceRange] = useState('');
   let [selectedColor, setSelectedColor] = useState('');
   let [sortOrder, setSortOrder] = useState('');
-  let [sortBy, setSortBy] = useState('');
+  let [sortBy, setSortBy] = useState(''); 
 
   function filterByCategoryId(products, categoryId) {
     const filteredProducts = [];
@@ -25,9 +27,9 @@ export default function Carpentry() {
 
   let products = useSelector((store) => store.products.products)
   //console.log(products)
-  let carpentryProducts = filterByCategoryId(products, "64d4fd9fc84ae7805abbeab6")
-  const uniqueBrands = [...new Set(carpentryProducts?.map((product) => product.brand))]; // Obtener marcas únicas
-  const uniqueColors = [...new Set(carpentryProducts?.map((product) => product.description[0]?.color))];
+  let filteredProducts = filterByCategoryId(products, categoryId);
+  const uniqueBrands = [...new Set(filteredProducts?.map((product) => product.brand))]; // Obtener marcas únicas
+  const uniqueColors = [...new Set(filteredProducts?.map((product) => product.description[0]?.color))];
 
   let getProducts = async () => {
     dispatch(productsActions.data_products())
@@ -54,7 +56,6 @@ export default function Carpentry() {
   };
 
   // Filtrar productos según la marca seleccionada
-  let filteredProducts = carpentryProducts;
   if (selectedBrand) {
     filteredProducts = filteredProducts.filter((product) => product.brand === selectedBrand);
   }

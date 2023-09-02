@@ -74,40 +74,8 @@ const router = createBrowserRouter([
         element: <AllProducts />,
       },
       {
-        path: '/products/carpentry',
+        path: '/category/:id',
         element: <Carpentry />,
-      },
-      {
-        path: '/products/construction',
-        element: <Construction />,
-      },
-      {
-        path: '/products/electricity',
-        element: <Electricity />,
-      },
-      {
-        path: '/products/flooring',
-        element: <FlooringProducts />,
-      },
-      {
-        path: '/products/furniture',
-        element: <Furniture />,
-      },
-      {
-        path: '/products/hardware',
-        element: <Hardware />,
-      },
-      {
-        path: '/products/kitchen&bath',
-        element: <KitchenAndBath />,
-      },
-      {
-        path: '/products/painting',
-        element: <Painting />,
-      },
-      {
-        path: '/products/tools',
-        element: <Tools />,
       },
       {
         path: '/products/search-results',

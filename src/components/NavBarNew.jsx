@@ -13,6 +13,7 @@ const NavBar = () => {
   let [searchedProducts, setSearchedProducts] = useState([]);
   let dispatch = useDispatch();
   let navigate = useNavigate()
+  const [categories, setCategories] = useState([]);
   let token = JSON.parse(localStorage.getItem("token"));
   let user = JSON.parse(localStorage.getItem("user"));
   //console.log(user)
@@ -39,6 +40,19 @@ const NavBar = () => {
     dispatch(productsActions.searched_products({search}))
     navigate('/products/search-results')
   }
+
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get(apiUrl + 'categories');
+      setCategories(response.data.response);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories()
+  }, []);
   
   return (
     <>
@@ -93,39 +107,17 @@ const NavBar = () => {
         )}
       </nav>
       <div className="flex h-[6vh] ps-6 justify-start items-center bg-[#ff5757]">
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/all" >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/all">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           All
         </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/carpentry" >
-          Carpentry
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/construction" >
-          Construction
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/electricity" >
-          Electricity
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/flooring" >
-          Flooring
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/furniture" >
-          Furniture
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/hardware" >
-          Hardware
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/kitchen&bath" >
-          Kitchen&Bath
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/painting" >
-          Painting
-        </Anchor>
-        <Anchor className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to="/products/tools" >
-          Tools
-        </Anchor>
+        {categories.map((category) => (
+          <Anchor key={category._id} className="flex text-white p-2 rounded hover:border-white hover:text-bold border border-transparent hover:border" to={`/category/${category._id}`}>
+            {category.name}
+          </Anchor>
+        ))}
       </div>
     </>
   );
